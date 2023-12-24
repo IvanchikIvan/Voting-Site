@@ -1,10 +1,17 @@
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Voting, Option, Vote
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def voting_list(request):
     votings = Voting.objects.all()
     return render(request, 'index.html', {'votings': votings})
 
+
+@login_required
 def voting_detail(request, voting_id):
     voting = get_object_or_404(Voting, pk=voting_id)
     options = Option.objects.filter(voting_id=voting)
@@ -18,3 +25,21 @@ def voting_detail(request, voting_id):
         Vote.objects.create(user=request.user, option=selected_option)
 
     return render(request, 'voting.html', {'voting': voting, 'options': options})
+
+
+def user_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            if user is not None:
+                login(request, user)
+                return redirect('voting_list')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form})
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('voting_list')

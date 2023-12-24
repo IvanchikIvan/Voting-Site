@@ -8,6 +8,11 @@
     <nav>
       <div class="navbar">
         <a class="navbar__item" href="{% url 'voting_list' %}">Главная</a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}">Выйти</a>
+        {% else %}
+        <a href="{% url 'login' %}">Войти</a>
+        {% endif %}
       </div>
     </nav>
   </body>
