@@ -1,0 +1,26 @@
+.navbar {
+    position: fixed;
+    left: 0;
+    background: #fff;
+    border-right: 1px solid black ;
+    height: 100vh;
+    width: calc(210px + 165 * (100vw / 1080));
+}
+
+.navbar__container{
+    padding: calc(20px + 65 * (100vw / 1080)) 30px;
+    width: max-content;
+    margin: 0 auto;
+    height: 100%;
+    gap:30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.navbar__item {
+    color:#2e2e2e;
+    font-size: calc(15px + 5 * (100vw / 1080));
+    text-align: left;
+}
