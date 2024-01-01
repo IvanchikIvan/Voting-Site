@@ -11,7 +11,7 @@
 .top__container {
   width: 100%;
   padding: 16px 32px;
-  border-bottom: 2px #ccc solid;
+  border-bottom: 2px #e5e5ea solid;
   font-family: "IBM Plex Sans";
   display: flex;
   flex-direction: row;

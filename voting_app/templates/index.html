@@ -56,9 +56,9 @@
           </div>
           <div class="enter-button__container">
             {% if user.is_authenticated %}
-              <button class="enter-button">Выйти</button>
+              <a href="{% url 'logout' %}" class="enter-button">Выйти</a>
             {% else %}
-              <button class="enter-button">Войти</button>
+              <a href="{% url 'login' %}" class="enter-button">Войти</a>
             {% endif %}
           </div>
         </div>
