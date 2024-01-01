@@ -7,21 +7,61 @@
     <link rel="stylesheet" href="{% static 'NavBar\NavBar.css' %}" />
     <link rel="stylesheet" href="{% static 'voting_list\voting_list.css' %}" />
     <link rel="stylesheet" href="{% static 'reset.css' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://myfonts.ru/myfonts?fonts=Nasalization"
+      rel="stylesheet"
+      type="text/css"
+    />
   </head>
   <body>
     <div class="voting-list-block">
       <nav class="navbar">
+        <div class="navbar__title-container">
+          <img src="{% static 'assets/SpaceAlien.Social.svg' %}" />
+        </div>
         <div class="navbar__container">
-          <a class="navbar__item" href="{% url 'voting_list' %}">Главная</a>
-          {% if user.is_authenticated %}
-          <a class="navbar__item" href="{% url 'logout' %}">Выйти</a>
-          {% else %}
-          <a class="navbar__item" href="{% url 'login' %}">Войти</a>
-          {% endif %}
+          <div class="navbar__item active">
+            <img src="{% static 'assets/home.svg' %}" />
+            <a href="{% url 'voting_list' %}">Главная</a>
+          </div>
+          <div class="navbar__item">
+            <img src="{% static 'assets/notifications.svg' %}" />
+            <a href="{% url 'voting_list' %}">Уведомления</a>
+          </div>
+          <div class="navbar__item">
+            <img src="{% static 'assets/article.svg' %}" />
+            <a href="{% url 'voting_list' %}">Публикации</a>
+          </div>
+          <div class="navbar__item">
+            <img src="{% static 'assets/account.svg' %}" />
+            <a href="{% url 'voting_list' %}">Аккаунт</a>
+          </div>
+          <div class="navbar__item">
+            <img src="{% static 'assets/apartment.svg' %}" />
+            <a href="{% url 'voting_list' %}">О нас</a>
+          </div>
         </div>
       </nav>
       <div class="voting-list-container">
-        <h1 class="voting-list-container__title">Home</h1>
+        <div class="top__container">
+          <div class="search-bar__container">
+            <input type="text" class="search-bar" placeholder="Search..." />
+          </div>
+          <div class="enter-button__container">
+            {% if user.is_authenticated %}
+              <button class="enter-button">Выйти</button>
+            {% else %}
+              <button class="enter-button">Войти</button>
+            {% endif %}
+          </div>
+        </div>
         <div class="voting-list">
           {% for voting in votings %}
           <div class="voting-list__item">
@@ -31,7 +71,9 @@
                 <p>{{ voting.author.username }}</p>
               </div>
             </div>
-            <a href="{% url 'voting_detail' voting.id %}" class="item__title">{{ voting.title }}</a>
+            <a href="{% url 'voting_detail' voting.id %}" class="item__title"
+              >{{ voting.title }}</a
+            >
             <p class="item__description">{{ voting.description }}</p>
           </div>
           {% endfor %}

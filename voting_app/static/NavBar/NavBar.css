@@ -1,46 +1,82 @@
 .navbar {
-    position: sticky;
-    left: 0;
-    top: 0;
-    background: #fff;
-    border-right: 1px solid black ;
-    height: 100vh;
-    flex:1;
+  position: sticky;
+  left: 0;
+  top: 0;
+  background: #fff;
+  border-right: 2px solid #e5e5ea;
+  height: 100vh;
+  flex: 1;
+  font-size: 100%;
+  max-width: 348px;
 }
 
-.navbar__container{
-    padding: calc(20px + 65 * (100vw / 1080));
-    width: max-content;
-    margin: 0 auto;
-    height: 100%;
-    gap:30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+.navbar__title-container {
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar__title {
+  font-family: "Nasalization";
+  font-size: 32px;
+  font-weight: 400;
+}
+
+.navbar__container {
+  padding: calc(5px + 5 * (100vw / 1080));
+  margin: 0 auto;
+  height: 100%;
+  gap: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .navbar__item {
-    color:#2e2e2e;
-    font-size: calc(25px + 5 * (100vw / 1080));
-    text-align: left;
+  color: #2e2e2e;
+  padding: calc(5px + 5 * (100vw / 1080));
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  border-radius: 10px;
+  transition: all 0.3s;
+  font-family: "IBM Plex Sans";
+}
+
+.navbar__item.active {
+  border: 2px solid #438ff4;
+}
+
+.navbar__item:hover {
+  background: #dcdce4b0;
+}
+
+.navbar__item a {
+    font-size: calc(10px + 14 * (100vw / 1080));
+    color: #2e2e2e;
 }
 
 @media (max-width: 750px) {
-    .navbar {
-        width: 100%;
-        top: 0;
-        height: 70px;
-        border-bottom: 1px solid black;
-        border-right: none;
-    }
-    .navbar__container{
-        padding: calc(5px + 15 * (100vw / 1080)) 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-    }
+  .navbar {
+    width: 100%;
+    top: 0;
+    height: 70px;
+    border-bottom: 2px solid #e5e5ea;
+    border-right: none;
   }
+  .navbar__container {
+    padding: calc(5px + 15 * (100vw / 1080)) 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+}

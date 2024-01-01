@@ -5,6 +5,46 @@
 
 .navbar {
   flex: 1;
+  border-right: 2px #e5e5ea solid;
+}
+
+.top__container {
+  width: 100%;
+  padding: 16px 32px;
+  border-bottom: 2px #ccc solid;
+  font-family: "IBM Plex Sans";
+  display: flex;
+  flex-direction: row;
+}
+
+.enter-button {
+  background-color: #438FF4;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 26px;
+  color: #fff;
+}
+
+.enter-button__container {
+  flex:1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.search-bar__container{
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+
+.search-bar {
+  padding: 10px;
+  border: 1px solid #438FF4;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: "IBM Plex Sans";
+  width: 100%;
 }
 
 .voting-list-container {
@@ -14,10 +54,12 @@
 }
 
 .voting-list__item {
-  border: 1px solid black;
+  border-right: 2px solid #e5e5ea;
+  border-bottom: 2px solid #e5e5ea;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  font-family: "IBM Plex Sans";
   justify-content: center;
   align-items: flex-start;
   width: 100%;
