@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>Create a New Voting</h2>
+    <form method="post" action="{% url 'create_voting' %}" id="voting-form">
+      {% csrf_token %} {{ form.as_p }}
+      <div id="options-container">
+        <label for="id_options">Options:</label>
+        <div class="options-wrapper">
+          <input type="text" name="options" class="option-field" required />
+          <button type="button" class="add-option-btn">Add Option</button>
+        </div>
+      </div>
+      <button type="submit">Create Voting</button>
+    </form>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const optionsContainer = document.getElementById("options-container");
+        const addOptionBtn = document.querySelector(".add-option-btn");
+
+        addOptionBtn.addEventListener("click", function () {
+          const new_option = document.createElement("input");
+          new_option.type = "text";
+          new_option.name = "options";
+          new_option.className = "option-field";
+          new_option.required = true;
+          const wrapper = document.createElement("div");
+          wrapper.className = "options-wrapper";
+          wrapper.appendChild(new_option);
+          optionsContainer.appendChild(wrapper);
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, get_object_or_404, redirect
+from voting_app.forms import VotingForm
 from .models import Voting, Option, Vote
 from django.contrib.auth.decorators import login_required
 
@@ -15,6 +16,8 @@ def voting_list(request):
 def voting_detail(request, voting_id):
     voting = get_object_or_404(Voting, pk=voting_id)
     options = Option.objects.filter(voting_id=voting)
+    total_votes = Vote.objects.filter(option__in=options).count()
+    print(total_votes)
     existing_vote = Vote.objects.filter(user=request.user, option__voting_id=voting)
     if request.method == 'POST':
         selected_option_id = request.POST.get('option')
@@ -43,3 +46,14 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('voting_list')
+
+
+def create_voting(request):
+    if request.method == 'POST':
+        form = VotingForm(request.POST, request=request)
+        if form.is_valid():
+            form.save()
+            return redirect('voting_list')
+    else:
+        form = VotingForm(request=request)
+    return render(request, 'create_voting.html', {'form': form})
