@@ -9,4 +9,5 @@ urlpatterns = [
     path('<int:voting_id>/', views.voting_detail, name='voting_detail'),
     path('accounts/login/', views.user_login, name='login'),
     path('accounts/logout/', views.user_logout, name='logout'),
+    path('create_voting/', views.create_voting, name='create_voting'),
 ]
