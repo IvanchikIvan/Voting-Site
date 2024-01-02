@@ -10,8 +10,14 @@
     <form method="post" action="{% url 'create_voting' %}" id="voting-form">
       {% csrf_token %} {{ form.as_p }}
       <div id="options-container">
+        <label for="id_options">Options:</label>
         <div class="options-wrapper">
-          <input type="text" name="options" class="option-field" required />
+          <input
+            type="text"
+            name="option-field"
+            class="option-field"
+            required
+          />
           <button type="button" class="add-option-btn">Add Option</button>
         </div>
       </div>
@@ -24,14 +30,16 @@
         const addOptionBtn = document.querySelector(".add-option-btn");
 
         addOptionBtn.addEventListener("click", function () {
-          const new_option = document.createElement("input");
-          new_option.type = "text";
-          new_option.name = "options";
-          new_option.className = "option-field";
-          new_option.required = true;
+          const newInput = document.createElement("input");
+          newInput.type = "text";
+          newInput.name = "option-field";
+          newInput.className = "option-field";
+          newInput.required = true;
+
           const wrapper = document.createElement("div");
           wrapper.className = "options-wrapper";
-          wrapper.appendChild(new_option);
+          wrapper.appendChild(newInput);
+
           optionsContainer.appendChild(wrapper);
         });
       });
