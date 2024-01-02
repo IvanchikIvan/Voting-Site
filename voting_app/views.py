@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import render, get_object_or_404, redirect
 from voting_app.forms import VotingForm
 from .models import Voting, Option, Vote
@@ -57,3 +57,14 @@ def create_voting(request):
     else:
         form = VotingForm(request=request)
     return render(request, 'create_voting.html', {'form': form})
+
+def user_register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('voting_list')
+    else:
+        form = UserCreationForm()
+    return render(request, 'register.html', {'form': form})
