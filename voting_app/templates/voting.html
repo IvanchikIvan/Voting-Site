@@ -7,7 +7,6 @@
     <link rel="stylesheet" type="text/css" href="{% static 'voting/voting.css' %}">
   </head>
   <body>
-    {% include './NavBar.html' %}
     <h2>{{ voting.title }}</h2>
     <p>{{ voting.description }}</p>
     <form method="post" action="{% url 'voting_detail' voting.id %}" id="votingForm">
