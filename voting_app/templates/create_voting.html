@@ -10,7 +10,6 @@
     <form method="post" action="{% url 'create_voting' %}" id="voting-form">
       {% csrf_token %} {{ form.as_p }}
       <div id="options-container">
-        <label for="id_options">Options:</label>
         <div class="options-wrapper">
           <input type="text" name="options" class="option-field" required />
           <button type="button" class="add-option-btn">Add Option</button>
