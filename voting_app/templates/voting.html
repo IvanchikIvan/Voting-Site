@@ -9,6 +9,85 @@
     <link rel="stylesheet" href="{% static 'css\index.css' %}"/>
 </head>
 <body>
+    <div class="nav">
+        <div class="nav__container">
+            <div class="nav_logo">
+                <div class="nav_logo_container">
+                    <a class="nav_logo-link" href="" title="SpaceAlien">
+                        <div class="nav_logo-svg_container">
+                            <img class="nav_logo-svg" src="{% static 'data\SpaceAlien_logo.svg' %}" alt="">
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="menu__container">
+                <nav class="menu__link-bar">
+                    <ul class="menu__list">
+                        <li class="menu__item active" role="listitem">
+                            <a class="menu__link" href="">
+                                <div class="menu__link_container">
+                                    <div class="menu__icon">
+                                        <img src="{% static 'data\home.svg' %}" alt="">
+                                    </div>
+                                    <div class="menu__title">
+                                        <a href="{% url 'voting_list' %}">Главная</a>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="menu__item no_active" role="listitem">
+                            <a class="menu__link" href="">
+                                <div class="menu__link_container">
+                                    <div class="menu__icon">
+                                        <img src="{% static 'data\notifications.svg' %}" alt="">
+                                    </div>
+                                    <div class="menu__title">
+                                        <a href="{% url 'voting_list' %}">Уведомления</a>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="menu__item no_active" role="listitem">
+                            <a class="menu__link" href="">
+                                <div class="menu__link_container">
+                                    <div class="menu__icon">
+                                        <img src="{% static 'data\article.svg' %}" alt="">
+                                    </div>
+                                    <div class="menu__title">
+                                        <a href="{% url 'voting_list' %}">Публикации</a>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="menu__item no_active" role="listitem">
+                            <a class="menu__link" href="">
+                                <div class="menu__link_container">
+                                    <div class="menu__icon">
+                                        <img src="{% static 'data\account.svg' %}" alt="">
+                                    </div>
+                                    <div class="menu__title">
+                                        <a href="{% url 'voting_list' %}">Аккаунт</a>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="menu__item no_active" role="listitem">
+                            <a class="menu__link" href="">
+                                <div class="menu__link_container">
+                                    <div class="menu__icon">
+                                        <img src="{% static 'data\about.svg' %}" alt="">
+                                    </div>
+                                    <div class="menu__title">
+                                        <a href="{% url 'voting_list' %}">О нас</a>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
     <div class="content">
         <header>
             <div class="header_search">
