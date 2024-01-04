@@ -1,63 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Title</title>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'voting/voting.css' %}">
-  </head>
-  <body>
-    <h2>{{ voting.title }}</h2>
-    <p>{{ voting.description }}</p>
-    <form method="post" action="{% url 'voting_detail' voting.id %}" id="votingForm">
-      {% csrf_token %}
-      <ul>
-        {% for option in options %}
-        <li>
-          <label>
-            <input
-              type="radio"
-              name="option"
-              value="{{ option.id }}"
-              required
-            />
-            {{ option.content }}
-          </label>
-        </li>
-        {% endfor %}
-      </ul>
-      <button type="submit" class="vote-button">Vote</button>
-    </form>
-    {% if already_voted == 0 %}
-      <div id="already-modal" class="already-modal--close">
-    {% elif already_voted == 1 %}
-      <div id="already-modal" class="already-modal--open">
-    {% endif %}
-      <div class="already-modal__content">
-        <span class="already-modal__close-button">&times;</span>
-        <p>Вы уже проголосовали в этом опросе</p>
-      </div>
+    <link rel="stylesheet" href="{% static 'css\index.css' %}"/>
+</head>
+<body>
+    <div class="content">
+        <main>
+            <h2>{{ voting.title }}</h2>
+            <p>{{ voting.description }}</p>
+            <form method="post" action="{% url 'voting_detail' voting.id %}" id="votingForm">
+                {% csrf_token %}
+                <ul style="list-style: none">
+                {% for option in options %}
+                <li>
+                    <label>
+                        <input type="radio" name="option" value="{{ option.id }}" required/> {{ option.content }}
+                        {% if option.id in option_percentages %}
+                            <span class="percentage">{{ option_percentages.option.id }}%</span>
+                        {% endif %}
+                    </label>
+                </li>
+                {% endfor %}
+            </ul>
+            <button type="submit" class="vote-button">Vote</button>
+            </form>
+            {% if already_voted == 0 %}
+            <div id="already-modal" class="already-modal--close">
+                {% elif already_voted == 1 %}
+                <div id="already-modal" class="already-modal--open">
+                    {% endif %}
+                    <div class="already-modal__content">
+                        <span class="already-modal__close-button">&times;</span>
+                        <p>Вы уже проголосовали в этом опросе</p>
+                    </div>
+                </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var modal = document.getElementById('already-modal');
+                        var vote_button = document.getElementsByClassName('vote-button')[0];
+                        var close_button = document.getElementsByClassName('already-modal__close-button')[0];
+                        vote_button.onclick = function () {
+                            if ({{already_voted}} == 1)
+                            {
+                                console.log(1)
+                                modal.classList.value = 'already-modal--open';
+                            }
+                        };
+                        close_button.onclick = function () {
+                            modal.style.display = 'none';
+                        };
+                        window.onclick = function (event) {
+                            if (event.target === modal) {
+                                modal.classList.value = 'already-modal--close';
+                            }
+                        };
+                    });
+                </script>
+        </main>
     </div>
-        <script>
-      document.addEventListener('DOMContentLoaded', function () {
-      var modal = document.getElementById('already-modal');
-      var vote_button = document.getElementsByClassName('vote-button')[0];
-      var close_button = document.getElementsByClassName('already-modal__close-button')[0];
-      vote_button.onclick = function () {
-        if ({{already_voted}} == 1) {
-          console.log(1)
-          modal.classList.value = 'already-modal--open';
-        }
-      };
-      close_button.onclick = function () {
-        modal.style.display = 'none';
-      };
-      window.onclick = function (event) {
-        if (event.target === modal) {
-          modal.classList.value = 'already-modal--close';
-        }
-      };
-    });
-    </script>
-  </body>
+</body>
 </html>
+
