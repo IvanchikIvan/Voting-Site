@@ -11,6 +11,18 @@
 <body>
     <div class="content">
         <header>
+            <div class="header_search">
+                <div class="header_search_container">
+                    <div class="header__search__input__container">
+                        <input id="input" class="header__search__input" type="search" autocomplete="off" spellcheck="false"
+                               role="combobox" aria-controls="matches" placeholder="Введите поисковый запрос"
+                               aria-expanded="false" aria-live="polite">
+                    </div>
+                    <div class="header__search__cancellation">
+                        <img src="{% static 'data\cancellation.svg' %}" alt="">
+                    </div>
+                </div>
+            </div>
             <div class="header__logout">
                 {% if user.is_authenticated %}
                 <div class="header__logout__container">
