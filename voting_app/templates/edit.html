@@ -30,7 +30,6 @@
       </div>
       <button type="submit">Save Changes</button>
     </form>
-
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const optionsContainer = document.getElementById("options-container");
@@ -39,8 +38,8 @@
         addOptionBtn.addEventListener("click", function () {
           const newInput = document.createElement("input");
           newInput.type = "text";
-          newInput.name = "options-field";
-          newInput.className = "options-field";
+          newInput.name = "option-field";
+          newInput.className = "option-field";
           newInput.required = true;
 
           const wrapper = document.createElement("div");
