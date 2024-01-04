@@ -10,6 +10,19 @@
 </head>
 <body>
     <div class="content">
+        <header>
+            <div class="header__logout">
+                {% if user.is_authenticated %}
+                <div class="header__logout__container">
+                    <a class="header__logout__text" href="{% url 'logout' %}">Выйти</a>
+                </div>
+                {% else %}
+                <div class="header__logout__container">
+                    <a class="header__logout__text" href="{% url 'login' %}">Войти</a>
+                </div>
+                {% endif %}
+            </div>
+        </header>
         <main>
             <h2>{{ voting.title }}</h2>
             <p>{{ voting.description }}</p>
