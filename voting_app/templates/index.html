@@ -56,9 +56,9 @@
           </div>
           <div class="enter-button__container">
             {% if user.is_authenticated %}
-              <a href="{% url 'logout' %}" class="enter-button">Выйти</a>
+            <a href="{% url 'logout' %}" class="enter-button">Выйти</a>
             {% else %}
-              <a href="{% url 'login' %}" class="enter-button">Войти</a>
+            <a href="{% url 'login' %}" class="enter-button">Войти</a>
             {% endif %}
           </div>
         </div>
@@ -75,7 +75,8 @@
               >{{ voting.title }}</a
             >
             <p class="item__description">{{ voting.description }}</p>
-            <a href="{% url 'edit_voting' voting.id %}"><img src="{% static 'assets/edit_button.svg' %}"></a>
+            <a class="edit_button" href="{% url 'edit_voting' voting.id %}"
+              >edit</a>
           </div>
           {% endfor %}
           <a href="{% url 'create_voting' %}">Здесь мог быть ваш новый опрос</a>
