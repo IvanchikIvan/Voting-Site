@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>Edit Voting</h2>
+    <form
+      method="post"
+      action="{% url 'edit_voting' voting.id %}"
+      id="voting-form"
+    >
+      {% csrf_token %} {{ form.as_p }}
+      <div id="options-container">
+        <label for="id_options">Options:</label>
+        {% for option in voting.option_set.all %}
+        <div class="options-wrapper">
+          <input
+            type="text"
+            name="options-field"
+            class="options-field"
+            value="{{ option.content }}"
+            required
+          />
+        </div>
+        {% endfor %}
+        <button type="button" class="add-option-btn">Add Option</button>
+      </div>
+      <button type="submit">Save Changes</button>
+    </form>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const optionsContainer = document.getElementById("options-container");
+        const addOptionBtn = document.querySelector(".add-option-btn");
+
+        addOptionBtn.addEventListener("click", function () {
+          const newInput = document.createElement("input");
+          newInput.type = "text";
+          newInput.name = "options-field";
+          newInput.className = "options-field";
+          newInput.required = true;
+
+          const wrapper = document.createElement("div");
+          wrapper.className = "options-wrapper";
+          wrapper.appendChild(newInput);
+
+          optionsContainer.appendChild(wrapper);
+        });
+      });
+    </script>
+  </body>
+</html>

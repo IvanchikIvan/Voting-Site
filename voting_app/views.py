@@ -68,3 +68,19 @@ def user_register(request):
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
+
+
+def edit_voting(request, voting_id):
+    voting = get_object_or_404(Voting, pk=voting_id)
+    if request.user != voting.author:
+        return redirect('voting_list')
+
+    if request.method == 'POST':
+        form = VotingForm(request.POST, instance=voting, request=request)
+        if form.is_valid():
+            form.save()
+            return redirect('voting_list')
+    else:
+        form = VotingForm(instance=voting, request=request)
+
+    return render(request, 'edit.html', {'form': form, 'voting': voting})

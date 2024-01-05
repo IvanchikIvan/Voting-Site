@@ -75,6 +75,7 @@
               >{{ voting.title }}</a
             >
             <p class="item__description">{{ voting.description }}</p>
+            <a href="{% url 'edit_voting' voting.id %}"><img src="{% static 'assets/edit_button.svg' %}"></a>
           </div>
           {% endfor %}
           <a href="{% url 'create_voting' %}">Здесь мог быть ваш новый опрос</a>
