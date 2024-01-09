@@ -1,15 +1,54 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Title</title>
-  </head>
-  <body>
-    <h2>Login</h2>
-    <form method="post" action="{% url 'login' %}">
-      {% csrf_token %} {{ form.as_p }}
-      <button type="submit">Login</button>
-    </form>
-    <a href="{% url 'register' %}">register</a>
-  </body>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <link rel="stylesheet" href="{% static 'css\login.css' %}" />
+    <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+</head>
+<body>
+    <div class="content">
+        <div class="login__form">
+            <div class="login__form__logo">
+                <img src="{% static 'data\SpaceAlien_logo.svg' %}" alt="">
+            </div>
+            <div class="login_form_title">Вход</div>
+            <form method="post" action="/accounts/login/" id="from">
+                {% csrf_token %}
+                <div class="login__form__username__container">
+                    <div class="login__form__username__container-title">
+                        Имя пользователя или адрес электронной почты
+                    </div>
+                    <div class="login__form__username__container-input">
+                        <input type="text" name="username" value="" autofocus autocapitalize="none" autocomplete="username"
+                               maxlength="150" required id="id_username">
+                    </div>
+                    <div class="login__username__error" id="username__error">
+                        <div class="login__username__error-logo">
+                            <img src="{% static 'data\error.svg' %}" alt="">
+                        </div>
+                        <div class="login__username__error-title">Введите имя пользователя или адрес электронной почты</div>
+                    </div>
+                </div>
+                <div class="login__form__password__container">
+                    <div class="login__from__password__container-title">
+                        Пароль
+                    </div>
+                    <div class="login__from__password__container-input">
+                        <input type="password" name="password" autocomplete="current-password" required id="id_password">
+                    </div>
+                    <div class="login__password__error" id="password__error">
+                        <div class="login__password__error-logo">
+                            <img src="{% static 'data\error.svg' %}" alt="">
+                        </div>
+                        <div class="login__password__error-title">Введите пароль</div>
+                    </div>
+                </div>
+                <button id="login" onclick="send_form()">Войти</button>
+            </form>
+        </div>
+    </div>
+</body>
 </html>
