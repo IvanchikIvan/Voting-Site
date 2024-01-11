@@ -16,18 +16,32 @@ def voting_list(request):
 def voting_detail(request, voting_id):
     voting = get_object_or_404(Voting, pk=voting_id)
     options = Option.objects.filter(voting_id=voting)
-    total_votes = Vote.objects.filter(option__in=options).count()
-    print(total_votes)
     existing_vote = Vote.objects.filter(user=request.user, option__voting_id=voting)
     if request.method == 'POST':
         selected_option_id = request.POST.get('option')
         selected_option = get_object_or_404(Option, pk=selected_option_id)
         if not existing_vote.exists():
             Vote.objects.create(user=request.user, option=selected_option)
-        if existing_vote.exists():
-            return render(request, 'voting.html', {'voting': voting, 'options': options, 'already_voted': 1})
+        elif existing_vote.exists():
+            vote_percents = []
+            options_id = []
+            votes_summ = 0
+            for option in options:
+                vote_summ = 0
+                for vote in Vote.objects.filter(option_id=option.id):
+                    vote_summ += 1
+                votes_summ += vote_summ
+            for option in options:
+                vote_summ = 0
+                for vote in Vote.objects.filter(option_id=option.id):
+                    vote_summ += 1
+                vote_percents.append(int(vote_summ / votes_summ * 100))
+                options_id.append(option.id)
+            vote_percents_rend = dict(zip(options_id, vote_percents))
+            return render(request, 'voting.html', {'voting': voting, 'options': options, 'already_voted': 1, 'vote_percents': vote_percents_rend})
     else:
         return render(request, 'voting.html', {'voting': voting, 'options': options, 'already_voted': 0})
+
 
 
 def user_login(request):

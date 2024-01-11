@@ -1,172 +1,47 @@
 <!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'voting/voting.css' %}">
-    <link rel="stylesheet" href="{% static 'css\index.css' %}"/>
-</head>
-<body>
-    <div class="nav">
-        <div class="nav__container">
-            <div class="nav_logo">
-                <div class="nav_logo_container">
-                    <a class="nav_logo-link" href="" title="SpaceAlien">
-                        <div class="nav_logo-svg_container">
-                            <img class="nav_logo-svg" src="{% static 'data\SpaceAlien_logo.svg' %}" alt="">
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="menu__container">
-                <nav class="menu__link-bar">
-                    <ul class="menu__list">
-                        <li class="menu__item active" role="listitem">
-                            <a class="menu__link" href="">
-                                <div class="menu__link_container">
-                                    <div class="menu__icon">
-                                        <img src="{% static 'data\home.svg' %}" alt="">
-                                    </div>
-                                    <div class="menu__title">
-                                        <a href="{% url 'voting_list' %}">Главная</a>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="menu__item no_active" role="listitem">
-                            <a class="menu__link" href="">
-                                <div class="menu__link_container">
-                                    <div class="menu__icon">
-                                        <img src="{% static 'data\notifications.svg' %}" alt="">
-                                    </div>
-                                    <div class="menu__title">
-                                        <a href="{% url 'voting_list' %}">Уведомления</a>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="menu__item no_active" role="listitem">
-                            <a class="menu__link" href="">
-                                <div class="menu__link_container">
-                                    <div class="menu__icon">
-                                        <img src="{% static 'data\article.svg' %}" alt="">
-                                    </div>
-                                    <div class="menu__title">
-                                        <a href="{% url 'voting_list' %}">Публикации</a>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="menu__item no_active" role="listitem">
-                            <a class="menu__link" href="">
-                                <div class="menu__link_container">
-                                    <div class="menu__icon">
-                                        <img src="{% static 'data\account.svg' %}" alt="">
-                                    </div>
-                                    <div class="menu__title">
-                                        <a href="{% url 'voting_list' %}">Аккаунт</a>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="menu__item no_active" role="listitem">
-                            <a class="menu__link" href="">
-                                <div class="menu__link_container">
-                                    <div class="menu__icon">
-                                        <img src="{% static 'data\about.svg' %}" alt="">
-                                    </div>
-                                    <div class="menu__title">
-                                        <a href="{% url 'voting_list' %}">О нас</a>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
-    <div class="content">
-        <header>
-            <div class="header_search">
-                <div class="header_search_container">
-                    <div class="header__search__input__container">
-                        <input id="input" class="header__search__input" type="search" autocomplete="off" spellcheck="false"
-                               role="combobox" aria-controls="matches" placeholder="Введите поисковый запрос"
-                               aria-expanded="false" aria-live="polite">
-                    </div>
-                    <div class="header__search__cancellation">
-                        <img src="{% static 'data\cancellation.svg' %}" alt="">
-                    </div>
-                </div>
-            </div>
-            <div class="header__logout">
-                {% if user.is_authenticated %}
-                <div class="header__logout__container">
-                    <a class="header__logout__text" href="{% url 'logout' %}">Выйти</a>
-                </div>
-                {% else %}
-                <div class="header__logout__container">
-                    <a class="header__logout__text" href="{% url 'login' %}">Войти</a>
-                </div>
+  </head>
+  <body>
+    {% include './NavBar.html' %}
+    <h2>{{ voting.title }}</h2>
+    <p>{{ voting.description }}</p>
+    <form method="post" action="{% url 'voting_detail' voting.id %}" id="votingForm">
+      {% csrf_token %}
+      {% if already_voted == 0 %}
+      <ul>
+        {% for option in options %}
+        <li>
+          <label>
+            <input
+              type="radio"
+              name="option"
+              value="{{ option.id }}"
+              required
+            />
+            {{ option.content }}
+          </label>
+        </li>
+        {% endfor %}
+      </ul>
+      <button type="submit" class="vote-button">Vote</button>
+      {% elif already_voted == 1 %}
+      <ul>
+        {% for option in options %}
+        <li>
+            {% for id, percent in vote_percents.items %}
+                {% if id == option.id %}
+                    <p>{{ option.content }} выбрало {{ percent }}% пользователей</p>
                 {% endif %}
-            </div>
-        </header>
-        <main>
-            <h2>{{ voting.title }}</h2>
-            <p>{{ voting.description }}</p>
-            <form method="post" action="{% url 'voting_detail' voting.id %}" id="votingForm">
-                {% csrf_token %}
-                <ul style="list-style: none">
-                {% for option in options %}
-                <li>
-                    <label>
-                        <input type="radio" name="option" value="{{ option.id }}" required/> {{ option.content }}
-                        {% if option.id in option_percentages %}
-                            <span class="percentage">{{ option_percentages.option.id }}%</span>
-                        {% endif %}
-                    </label>
-                </li>
-                {% endfor %}
-            </ul>
-            <button type="submit" class="vote-button">Vote</button>
-            </form>
-            {% if already_voted == 0 %}
-            <div id="already-modal" class="already-modal--close">
-                {% elif already_voted == 1 %}
-                <div id="already-modal" class="already-modal--open">
-                    {% endif %}
-                    <div class="already-modal__content">
-                        <span class="already-modal__close-button">&times;</span>
-                        <p>Вы уже проголосовали в этом опросе</p>
-                    </div>
-                </div>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        var modal = document.getElementById('already-modal');
-                        var vote_button = document.getElementsByClassName('vote-button')[0];
-                        var close_button = document.getElementsByClassName('already-modal__close-button')[0];
-                        vote_button.onclick = function () {
-                            if ({{already_voted}} == 1)
-                            {
-                                console.log(1)
-                                modal.classList.value = 'already-modal--open';
-                            }
-                        };
-                        close_button.onclick = function () {
-                            modal.style.display = 'none';
-                        };
-                        window.onclick = function (event) {
-                            if (event.target === modal) {
-                                modal.classList.value = 'already-modal--close';
-                            }
-                        };
-                    });
-                </script>
-        </main>
-    </div>
-</body>
+            {% endfor %}
+        </li>
+        {% endfor %}
+      {% endif %}
+      </ul>
+    </form>
+  </body>
 </html>
-
