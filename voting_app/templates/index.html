@@ -1,88 +1,159 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <title>Title</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'NavBar\NavBar.css' %}" />
-    <link rel="stylesheet" href="{% static 'voting_list\voting_list.css' %}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Главная</title>
+    <link rel="stylesheet" href="{% static 'css\index.css' %}" />
+    <link rel="stylesheet" href="{% static 'css\menu.css' %}" />
+    <link rel="stylesheet" href="{% static 'css\header.css' %}" />
     <link rel="stylesheet" href="{% static 'css\scrollbar.css' %}" />
-    <link rel="stylesheet" href="{% static 'reset.css' %}" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://myfonts.ru/myfonts?fonts=Nasalization"
-      rel="stylesheet"
-      type="text/css"
-    />
   </head>
   <body>
-    <div class="voting-list-block">
-      <nav class="navbar">
-        <div class="navbar__title-container">
-          <img src="{% static 'data/SpaceAlien_logo.svg' %}" />
-        </div>
-        <div class="navbar__container">
-          <div class="navbar__item active">
-            <img src="{% static 'data/home.svg' %}" />
-            <a href="{% url 'voting_list' %}">Главная</a>
-          </div>
-          <div class="navbar__item">
-            <img src="{% static 'data/notifications.svg' %}" />
-            <a href="{% url 'voting_list' %}">Уведомления</a>
-          </div>
-          <div class="navbar__item">
-            <img src="{% static 'data/article.svg' %}" />
-            <a href="{% url 'voting_list' %}">Публикации</a>
-          </div>
-          <div class="navbar__item">
-            <img src="{% static 'data/account.svg' %}" />
-            <a href="{% url 'voting_list' %}">Аккаунт</a>
-          </div>
-          <div class="navbar__item">
-            <img src="{% static 'data/about.svg' %}" />
-            <a href="{% url 'voting_list' %}">О нас</a>
-          </div>
-        </div>
-      </nav>
-      <div class="voting-list-container">
-        <div class="top__container">
-          <div class="search-bar__container">
-            <input type="text" class="search-bar" placeholder="Search..." />
-          </div>
-          <div class="enter-button__container">
-            {% if user.is_authenticated %}
-            <a href="{% url 'logout' %}" class="enter-button">Выйти</a>
-            {% else %}
-            <a href="{% url 'login' %}" class="enter-button">Войти</a>
-            {% endif %}
-          </div>
-        </div>
-        <div class="voting-list">
-          {% for voting in votings %}
-          <div class="voting-list__item">
-            <div class="item__creater">
-              <div class="creater__icon"></div>
-              <div class="creater__name">
-                <p>{{ voting.author.username }}</p>
+    <div class="nav">
+      <div class="nav__container">
+        <div class="nav_logo">
+          <div class="nav_logo_container">
+            <a class="nav_logo-link" href="" title="SpaceAlien">
+              <div class="nav_logo-svg_container">
+                <img
+                  class="nav_logo-svg"
+                  src="{% static 'data\SpaceAlien_logo.svg' %}"
+                  alt=""
+                />
               </div>
-            </div>
-            <a href="{% url 'voting_detail' voting.id %}" class="item__title"
-              >{{ voting.title }}</a
-            >
-            <p class="item__description">{{ voting.description }}</p>
-            <a class="edit_button" href="{% url 'edit_voting' voting.id %}"
-              >edit</a>
+            </a>
           </div>
-          {% endfor %}
-          <a href="{% url 'create_voting' %}">Здесь мог быть ваш новый опрос</a>
+        </div>
+        <div class="menu__container">
+          <nav class="menu__link-bar">
+            <ul class="menu__list">
+              <li class="menu__item active" role="listitem">
+                <a class="menu__link" href="">
+                  <div class="menu__link_container">
+                    <div class="menu__icon">
+                      <img src="{% static 'data\home.svg' %}" alt="" />
+                    </div>
+                    <div class="menu__title">Главная</div>
+                  </div>
+                </a>
+              </li>
+              <li class="menu__item no_active" role="listitem">
+                <a class="menu__link" href="">
+                  <div class="menu__link_container">
+                    <div class="menu__icon">
+                      <img src="{% static 'data\notifications.svg' %}" alt="" />
+                    </div>
+                    <div class="menu__title">Уведомления</div>
+                  </div>
+                </a>
+              </li>
+              <li class="menu__item no_active" role="listitem">
+                <a class="menu__link" href="">
+                  <div class="menu__link_container">
+                    <div class="menu__icon">
+                      <img src="{% static 'data\article.svg' %}" alt="" />
+                    </div>
+                    <div class="menu__title">Публикации</div>
+                  </div>
+                </a>
+              </li>
+              <li class="menu__item no_active" role="listitem">
+                <a class="menu__link" href="">
+                  <div class="menu__link_container">
+                    <div class="menu__icon">
+                      <img src="{% static 'data\account.svg' %}" alt="" />
+                    </div>
+                    <div class="menu__title">Аккаунт</div>
+                  </div>
+                </a>
+              </li>
+              <li class="menu__item no_active" role="listitem">
+                <a class="menu__link" href="">
+                  <div class="menu__link_container">
+                    <div class="menu__icon">
+                      <img src="{% static 'data\about.svg' %}" alt="" />
+                    </div>
+                    <div class="menu__title">О нас</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
+    </div>
+    <div class="content">
+      <header>
+        <div class="header_search">
+          <div class="header_search_container">
+            <div class="header__search__input__container">
+              <input
+                id="input"
+                class="header__search__input"
+                type="search"
+                autocomplete="off"
+                spellcheck="false"
+                role="combobox"
+                aria-controls="matches"
+                placeholder="Введите поисковый запрос"
+                aria-expanded="false"
+                aria-live="polite"
+              />
+            </div>
+            <div class="header__search__cancellation">
+              <img src="{% static 'data\cancellation.svg' %}" alt="" />
+            </div>
+          </div>
+        </div>
+        <div class="header__log">
+          {% if user.is_authenticated %}
+          <div class="header__log__container">
+            <a class="header__log-text" href="{% url 'logout' %}">Выйти</a>
+          </div>
+          {% else %}
+          <div class="header__log__container">
+            <a class="header__log-text" href="{% url 'login' %}">Войти</a>
+          </div>
+          {% endif %}
+        </div>
+      </header>
+      <main>
+        <div class="cards">
+          <a href="{% url 'create_voting' %}">Здесь мог быть ваш новый опрос</a>
+          <ul class="card__list">
+            {% for voting in votings %}
+            <li class="card__item">
+              <div class="card__container">
+                <div class="card__profile_image">
+                  <div class="card__profile_image__conteiner">
+                    <img src="{% static 'data\test.png' %}" alt="" />
+                  </div>
+                </div>
+                <div class="card__information">
+                  <div class="card__title__container">
+                    <div class="card__title">{{ voting.author.username }}</div>
+                    <div class="card__type">Опрос</div>
+                  </div>
+                  <div class="card__description">{{ voting.title }}</div>
+                </div>
+                <div class="card__more">
+                  <a href="{% url 'voting_detail' voting.id %}">
+                    <div class="card__more__container">
+                      <img src="{% static 'data\more.svg' %}" alt="" />
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <a class="edit_button" href="{% url 'edit_voting' voting.id %}"
+                >edit</a
+              >
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </main>
     </div>
   </body>
 </html>
