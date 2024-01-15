@@ -1,12 +1,14 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'voting/voting.css' %}">
-    <link rel="stylesheet" href="{% static 'css\index.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css\voting.css' %}">
+    <link rel="stylesheet" href="{% static 'css\menu.css' %}" />
+    <link rel="stylesheet" href="{% static 'css\header.css' %}" />
+    <link rel="stylesheet" href="{% static 'css\scrollbar.css' %}" />
 </head>
 <body>
     <div class="nav">
@@ -30,7 +32,7 @@
                                         <img src="{% static 'data\home.svg' %}" alt="">
                                     </div>
                                     <div class="menu__title">
-                                        <a href="{% url 'voting_list' %}">Главная</a>
+                                        Главная
                                     </div>
                                 </div>
                             </a>
@@ -42,7 +44,7 @@
                                         <img src="{% static 'data\notifications.svg' %}" alt="">
                                     </div>
                                     <div class="menu__title">
-                                        <a href="{% url 'voting_list' %}">Уведомления</a>
+                                        Уведомления
                                     </div>
                                 </div>
                             </a>
@@ -54,7 +56,7 @@
                                         <img src="{% static 'data\article.svg' %}" alt="">
                                     </div>
                                     <div class="menu__title">
-                                        <a href="{% url 'voting_list' %}">Публикации</a>
+                                        Публикации
                                     </div>
                                 </div>
                             </a>
@@ -66,7 +68,7 @@
                                         <img src="{% static 'data\account.svg' %}" alt="">
                                     </div>
                                     <div class="menu__title">
-                                        <a href="{% url 'voting_list' %}">Аккаунт</a>
+                                        Аккаунт
                                     </div>
                                 </div>
                             </a>
@@ -78,7 +80,7 @@
                                         <img src="{% static 'data\about.svg' %}" alt="">
                                     </div>
                                     <div class="menu__title">
-                                        <a href="{% url 'voting_list' %}">О нас</a>
+                                        О нас
                                     </div>
                                 </div>
                             </a>
@@ -102,53 +104,109 @@
                     </div>
                 </div>
             </div>
-            <div class="header__logout">
+            <div class="header__log">
                 {% if user.is_authenticated %}
-                <div class="header__logout__container">
-                    <a class="header__logout__text" href="{% url 'logout' %}">Выйти</a>
-                </div>
+                    <div class="header__log__container">
+                        <a class="header__log-text" href="{% url 'logout' %}">Выйти</a>
+                    </div>
                 {% else %}
-                <div class="header__logout__container">
-                    <a class="header__logout__text" href="{% url 'login' %}">Войти</a>
-                </div>
+                    <div class="header__log__container">
+                        <a class="header__log-text" href="{% url 'login' %}">Войти</a>
+                    </div>
                 {% endif %}
             </div>
         </header>
         <main>
-            <h2>{{ voting.title }}</h2>
-            <p>{{ voting.description }}</p>
-            <form method="post" action="{% url 'voting_detail' voting.id %}" id="votingForm">
-                {% csrf_token %}
-                {% if already_voted == 0 %}
-                <ul style="list-style: none">
-                {% for option in options %}
-                <li>
-                    <label>
-                        <input type="radio" name="option" value="{{ option.id }}" required/> {{ option.content }}
-                        {% if option.id in option_percentages %}
-                            <span class="percentage">{{ option_percentages.option.id }}%</span>
-                        {% endif %}
-                    </label>
-                </li>
-                {% endfor %}
-            </ul>
-            <button type="submit" class="vote-button">Vote</button>
-            {% elif already_voted == 1 %}
-            <ul>
-                {% for option in options %}
-                <li>
-                    {% for id, percent in vote_percents.items %}
-                        {% if id == option.id %}
-                            <p>{{ option.content }} выбрало {{ percent }}% пользователей</p>
-                        {% endif %}
-                    {% endfor %}
-                </li>
-                {% endfor %}
-            {% endif %}
-            </ul>
-            </form>
+            <div class="card">
+                <div class="card__back">
+                    <a class="card__back__link" href="/">
+                        <div class="card__back__conteiner">
+                            <div class="card__back__image">
+                                <img src="{% static 'data\back.svg' %}" alt="">
+                            </div>
+                            <div class="card__back__title">
+                                Назад
+                            </div>
+                        </div>  
+                    </a>
+                </div>
+                <div class="card__container">
+                    <div class="card__profile_image">
+                        <div class="card__profile_image__conteiner">
+                            <img src="{% static 'data\test.png' %}" alt="">
+                        </div>
+                    </div>
+                    <div class="card__information">
+                        <div class="card__title__container">
+                            <div class="card__title">{{ voting.author.username }}</div>
+                            <div class="card__type">Опрос</div>
+                        </div>
+                        <div class="card__description">{{ voting.title }}</div>
+                        <form class="card__variants" method="post" action="{% url 'voting_detail' voting.id %}" id="votingForm">
+                            {% csrf_token %}
+                            {% if already_voted == 0 %}
+                            <ul class="card__variants__list">
+                                {% for option in options %}
+                                    <li class="card__variants__item">
+                                        <div class="card__variants__item__container">
+                                            <div class="card__variants__button">
+                                                <input type="radio" name="option" value="{{ option.id }}" id="{{ option.id }}" required/>
+                                            </div>
+                                            <div class="card__variants__content" >
+                                                <label for="{{ option.id }}">{{ option.content }}</label>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <div class="card__send__container">
+                                <button class="card__send" id="card__send__button" onclick="send_voting()">Отправить</button>
+                                <div class="card__voted__image" id="is_voted">
+                                    <img src="{% static 'data\check.svg' %}" alt="">
+                                </div>
+                            </div>
+                            {% elif already_voted == 1 %}
+                            <ul>
+                                {% for option in options %}
+                                <li>
+                                    {% for id, percent in vote_percents.items %}
+                                        {% if id == option.id %}
+                                            <p>{{ option.content }} выбрало {{ percent }}% пользователей</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                </li>
+                                {% endfor %}
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
+    <script type="text/javascript">
+        window.onload = check_voted()
+
+        function check_voted() {
+            let card = document.getElementById("card__send__button");
+            let is_voted = document.getElementById("is_voted");
+            if ({{ already_voted }} == 1) {
+                card.classList.toggle('card__voted');
+                card.style.cursor = 'not-allowed';
+                is_voted.style.display = 'flex';
+            }
+            else {
+                is_voted.style.display = 'none';
+                card.style.cursor = 'pointer';
+            }
+        }
+
+
+        function send_voting() {
+            if ({{ already_voted }} != 1) {
+                let form = document.getElementById('votingForm');
+                form.submit();
+            }
+        }
+    </script>
 </body>
 </html>
-

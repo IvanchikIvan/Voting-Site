@@ -1,0 +1,130 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap");
+@import url("root.css");
+
+*,
+body {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+header {
+  width: calc(100% - var(--nav_width));
+  height: 80px;
+
+  border-bottom: 2px solid var(--border_section);
+  background-color: var(--background_color_section);
+
+  position: fixed;
+  z-index: 2020;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header_search {
+  width: 45%;
+  height: 100%;
+
+  padding: 16px;
+  margin-left: 16px;
+}
+
+.header_search_container {
+  width: 100%;
+  height: 100%;
+
+  border: 2px solid var(--blue);
+  border-radius: var(--border_radius);
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.header__search__input__container {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.header__search__input {
+  width: 100%;
+  height: 100%;
+
+  border: none;
+  border-radius: var(--border_radius) 0 0 var(--border_radius);
+
+  padding-left: 16px;
+}
+
+.header__search__cancellation {
+  width: auto;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding-right: 8px;
+}
+
+.header__search__input:focus {
+  outline: none !important;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}
+
+.header__log {
+  width: auto;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-left: auto;
+  padding-right: 16px;
+}
+
+.header__log__container {
+  width: auto;
+  height: 42px;
+
+  padding: 0px 22px;
+  border-radius: var(--border_radius);
+
+  background-color: var(--blue);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: var(--animation_transition);
+  cursor: pointer;
+}
+
+.header__log__container:hover {
+  background-color: var(--blue);
+  opacity: 0.8;
+}
+
+.header__log-text {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #ffffff;
+  text-decoration: none;
+}
