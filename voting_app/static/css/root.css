@@ -1,0 +1,13 @@
+:root {
+    --black_color_font: #1C1C1E;
+    --light_grey_logo_hover: #f2f2f7;
+    --border_section: #E5E5EA;
+    --background_color_section: #ffffff;
+    --blue: #438FF4;
+    --hover_color: rgba(242, 242, 247, 0.8);
+    --red: #D93025;
+    --border_radius: 5px;
+    --animation_transition: .3s;
+    --nav_width: 198px;
+    --form_width: 550px;
+}
