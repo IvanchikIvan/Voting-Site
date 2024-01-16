@@ -43,6 +43,7 @@ def voting_detail(request, voting_id):
 
 
 
+
 def user_login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, request.POST)
