@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Главная</title>
+    <link rel="stylesheet" href="{% static 'css\index.css' %}" />
+    <link rel="stylesheet" href="{% static 'css\menu.css' %}" />
+    <link rel="stylesheet" href="{% static 'css\header.css' %}" />
+    <link rel="stylesheet" href="{% static 'css\scrollbar.css' %}" />
+  </head>
+  <body>
+    <div class="nav">
+      <div class="nav__container">
+        <div class="nav_logo">
+          <div class="nav_logo_container">
+            <a class="nav_logo-link" href="" title="SpaceAlien">
+              <div class="nav_logo-svg_container">
+                <img
+                  class="nav_logo-svg"
+                  src="{% static 'data\SpaceAlien_logo.svg' %}"
+                  alt=""
+                />
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="menu__container">
+          <nav class="menu__link-bar">
+            <ul class="menu__list">
+              <li class="menu__item active" role="listitem">
+                <a class="menu__link" href="">
+                  <div class="menu__link_container">
+                    <div class="menu__icon">
+                      <img src="{% static 'data\home.svg' %}" alt="" />
+                    </div>
+                    <div class="menu__title">Главная</div>
+                  </div>
+                </a>
+              </li>
+              <li class="menu__item no_active" role="listitem">
+                <a class="menu__link" href="">
+                  <div class="menu__link_container">
+                    <div class="menu__icon">
+                      <img src="{% static 'data\notifications.svg' %}" alt="" />
+                    </div>
+                    <div class="menu__title">Уведомления</div>
+                  </div>
+                </a>
+              </li>
+              <li class="menu__item no_active" role="listitem">
+                <a class="menu__link" href="">
+                  <div class="menu__link_container">
+                    <div class="menu__icon">
+                      <img src="{% static 'data\article.svg' %}" alt="" />
+                    </div>
+                    <div class="menu__title">Публикации</div>
+                  </div>
+                </a>
+              </li>
+              <li class="menu__item no_active" role="listitem">
+                <a class="menu__link" href="">
+                  <div class="menu__link_container">
+                    <div class="menu__icon">
+                      <img src="{% static 'data\account.svg' %}" alt="" />
+                    </div>
+                    <div class="menu__title">Аккаунт</div>
+                  </div>
+                </a>
+              </li>
+              <li class="menu__item no_active" role="listitem">
+                <a class="menu__link" href="">
+                  <div class="menu__link_container">
+                    <div class="menu__icon">
+                      <img src="{% static 'data\about.svg' %}" alt="" />
+                    </div>
+                    <div class="menu__title">О нас</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <header>
+        <div class="header_search">
+          <div class="header_search_container">
+            <div class="header__search__input__container">
+              <input
+                id="input"
+                class="header__search__input"
+                type="search"
+                autocomplete="off"
+                spellcheck="false"
+                role="combobox"
+                aria-controls="matches"
+                placeholder="Введите поисковый запрос"
+                aria-expanded="false"
+                aria-live="polite"
+              />
+            </div>
+            <div class="header__search__cancellation">
+              <img src="{% static 'data\cancellation.svg' %}" alt="" />
+            </div>
+          </div>
+        </div>
+        <div class="header__log">
+          {% if user.is_authenticated %}
+          <div class="header__log__container">
+            <a class="header__log-text" href="{% url 'logout' %}">Выйти</a>
+          </div>
+          {% else %}
+          <div class="header__log__container">
+            <a class="header__log-text" href="{% url 'login' %}">Войти</a>
+          </div>
+          {% endif %}
+        </div>
+      </header>
+      <main>
+        <div class="cards">
+          <ul class="card__list">
+            {% for vote_data in user_votes_data %}
+            <li class="card__item">
+              <div class="card__container">
+                <div class="card__profile_image">
+                  <div class="card__profile_image__conteiner">
+                    <img src="{% static 'data\test.png' %}" alt="" />
+                  </div>
+                </div>
+                <div class="card__information">
+                  <div class="card__title__container">
+                    <div class="card__title">{{ vote_data.voting_author }}</div>
+                    <div class="card__type">Опрос</div>
+                  </div>
+                  <div class="card__description">
+                    {{ vote_data.voting_title }}
+                  </div>
+                  <div class="card__variants__item__container">
+                    <div class="card__variants__content">
+                      <label>{{ vote_data.option_content }}</label>
+                      <img src="{% static 'data\check.svg' %}" alt="" />
+                    </div>
+                  </div>
+                </div>
+                <div class="card__more">
+                  <a href="">
+                    <div class="card__more__container">
+                      <img src="{% static 'data\more.svg' %}" alt="" />
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <a class="edit_button" href="">edit</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

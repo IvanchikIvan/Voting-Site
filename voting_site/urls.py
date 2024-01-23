@@ -12,4 +12,5 @@ urlpatterns = [
     path('create_voting/', views.create_voting, name='create_voting'),
     path('accounts/register/', views.user_register, name='register'),
     path('edit_voting/<int:voting_id>/', views.edit_voting, name='edit_voting'),
+    path('user_options_list/<int:user_id>/', views.user_votes, name='user_options_list'),
 ]

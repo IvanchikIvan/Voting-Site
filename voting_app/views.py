@@ -98,3 +98,20 @@ def edit_voting(request, voting_id):
         form = VotingForm(instance=voting, request=request)
 
     return render(request, 'edit.html', {'form': form, 'voting': voting})
+
+@login_required
+def user_votes(request, user_id):
+    user_votes = Vote.objects.filter(user=user_id)
+    user_votes_data = list()
+    for vote in user_votes:
+        option = get_object_or_404(Option, id=vote.option_id)
+        voting = get_object_or_404(Voting, id=option.voting_id_id)
+        user_votes_data.append({
+            'voting_title': voting.title,
+            'voting_author': voting.author,
+            'option_content': option.content,
+        })
+    context = {
+        'user_votes_data': user_votes_data,
+    }
+    return render(request, 'user_options_list.html', context)
