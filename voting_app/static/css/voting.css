@@ -195,6 +195,10 @@ main {
 
 .card__variants__content {
     padding-left: 8px;
+    display: flex;
+    font-display: row;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .card__send__container {
