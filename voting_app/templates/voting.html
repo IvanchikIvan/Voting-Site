@@ -151,33 +151,25 @@
                 <img src="{{ voting.image.url }}" alt="Voting Image" />
               {% endif %}
               {% if already_voted == 0 %}
-              <form
-                class="card__variants"
-                method="post"
-                action="{% url 'voting_detail' voting.id %}"
-                id="votingForm"
-              >
+              <form class="card__variants" method="post" action="{% url 'voting_detail' voting.id %}" id="votingForm">
                 {% csrf_token %} 
                 <ul class="card__variants__list">
                   {% for option in options %}
-                  <li class="card__variants__item">
-                    <div class="card__variants__item__container">
-                      <div class="card__variants__button">
-                        <input
-                          type="radio"
-                          name="option"
-                          value="{{ option.id }}"
-                          id="{{ option.id }}"
-                          required
-                        />
+                    <li class="card__variants__item">
+                      <div class="card__variants__item__container">
+                        <div class="card__variants__button">
+                          <input
+                            type="checkbox"
+                            name="options"
+                            value="{{ option.id }}"
+                            id="{{ option.id }}"
+                          />
+                        </div>
+                        <div class="card__variants__content">
+                          <label for="{{ option.id }}">{{ option.content }}</label>
+                        </div>
                       </div>
-                      <div class="card__variants__content">
-                        <label for="{{ option.id }}"
-                          >{{ option.content }}</label
-                        >
-                      </div>
-                    </div>
-                  </li>
+                    </li>
                   {% endfor %}
                 </ul>
                 <div class="card__send__container">

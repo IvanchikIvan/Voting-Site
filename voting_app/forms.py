@@ -1,11 +1,16 @@
 from django import forms
 from .models import Voting, Option
 
-
 class VotingForm(forms.ModelForm):
+    voting_type = forms.ChoiceField(
+        choices=[('single', 'One of Many'), ('multiple', 'Multiple Choices')],
+        widget=forms.RadioSelect(),
+        initial='single'
+    )
+
     class Meta:
         model = Voting
-        fields = ['title', 'description', 'image']
+        fields = ['title', 'description', 'image', 'voting_type']
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)

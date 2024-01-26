@@ -16,14 +16,14 @@ def voting_list(request):
 def voting_detail(request, voting_id):
     voting = get_object_or_404(Voting, pk=voting_id)
     options = Option.objects.filter(voting_id=voting)
-    existing_vote = Vote.objects.filter(user=request.user, option__voting_id=voting)
+    existing_votes = Vote.objects.filter(user=request.user, option__voting_id=voting)
     if request.method == 'POST':
-        selected_option_id = request.POST.get('option')
-        selected_option = get_object_or_404(Option, pk=selected_option_id)
-        if not existing_vote.exists():
-            Vote.objects.create(user=request.user, option=selected_option)
-        vote_percents = []
-        options_id = []
+        selected_options_ids = request.POST.getlist('options')
+        selected_options = Option.objects.filter(id__in=selected_options_ids)
+        if not existing_votes.exists() and selected_options.exists():
+            for option in selected_options:
+                Vote.objects.create(user=request.user, option=option)
+        vote_percents = {}
         votes_summ = 0
         for option in options:
             vote_summ = Vote.objects.filter(option_id=option.id).count()
@@ -31,12 +31,10 @@ def voting_detail(request, voting_id):
         for option in options:
             vote_summ = Vote.objects.filter(option_id=option.id).count()
             if votes_summ > 0:
-                vote_percents.append(int(vote_summ / max(1, votes_summ) * 100))
+                vote_percents[option.id] = int(vote_summ / max(1, votes_summ) * 100)
             else:
-                vote_percents.append(0)
-            options_id.append(option.id)
-        vote_percents_rend = dict(zip(options_id, vote_percents))
-        return render(request, 'voting.html', {'voting': voting, 'options': options, 'already_voted': 1, 'vote_percents': vote_percents_rend})
+                vote_percents[option.id] = 0
+        return render(request, 'voting.html', {'voting': voting, 'options': options, 'already_voted': 1, 'vote_percents': vote_percents})
     else:
         return render(request, 'voting.html', {'voting': voting, 'options': options, 'already_voted': 0})
 
@@ -65,13 +63,14 @@ def user_logout(request):
 def create_voting(request):
     if request.method == 'POST':
         form = VotingForm(request.POST, request.FILES, request=request)
-        print(request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('voting_list')
     else:
         form = VotingForm(request=request)
-    return render(request, 'create_voting.html', {'form': form})
+
+    context = {'form': form}
+    return render(request, 'create_voting.html', context)
+
 
 def user_register(request):
     if request.method == 'POST':

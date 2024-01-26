@@ -1,14 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Create a New Voting</title>
   </head>
   <body>
     <h2>Create a New Voting</h2>
     <form method="post" action="{% url 'create_voting' %}" id="voting-form" enctype="multipart/form-data">
-      {% csrf_token %} {{ form.as_p }}
+      {% csrf_token %}
+      <label for="id_voting_type">Voting Type:</label>
+      <select name="voting_type" id="id_voting_type">
+        <option value="single">One of Many</option>
+        <option value="multiple">Multiple Choices</option>
+      </select>
+
+      {{ form.as_p }}
+
       <div id="options-container">
         <label for="id_options">Options:</label>
         <div class="options-wrapper">
