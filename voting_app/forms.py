@@ -5,7 +5,7 @@ from .models import Voting, Option
 class VotingForm(forms.ModelForm):
     class Meta:
         model = Voting
-        fields = ['title', 'description']
+        fields = ['title', 'description', 'image']
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
