@@ -147,6 +147,9 @@
                 <div class="card__type">Опрос</div>
               </div>
               <div class="card__description">{{ voting.title }}</div>
+              {% if voting.image %}
+                <img src="{{ voting.image.url }}" alt="Voting Image" />
+              {% endif %}
               {% if already_voted == 0 %}
               <form
                 class="card__variants"

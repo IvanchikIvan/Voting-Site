@@ -7,7 +7,7 @@
   </head>
   <body>
     <h2>Create a New Voting</h2>
-    <form method="post" action="{% url 'create_voting' %}" id="voting-form">
+    <form method="post" action="{% url 'create_voting' %}" id="voting-form" enctype="multipart/form-data">
       {% csrf_token %} {{ form.as_p }}
       <div id="options-container">
         <label for="id_options">Options:</label>

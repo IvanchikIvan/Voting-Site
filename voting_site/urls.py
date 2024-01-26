@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path
 from voting_app import views
+from voting_site import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -14,3 +16,6 @@ urlpatterns = [
     path('edit_voting/<int:voting_id>/', views.edit_voting, name='edit_voting'),
     path('user_options_list/<int:user_id>/', views.user_votes, name='user_options_list'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

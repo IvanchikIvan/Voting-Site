@@ -64,7 +64,8 @@ def user_logout(request):
 
 def create_voting(request):
     if request.method == 'POST':
-        form = VotingForm(request.POST, request=request)
+        form = VotingForm(request.POST, request.FILES, request=request)
+        print(request.FILES)
         if form.is_valid():
             form.save()
             return redirect('voting_list')
