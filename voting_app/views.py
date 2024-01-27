@@ -1,8 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import render, get_object_or_404, redirect
-from voting_app.forms import VotingForm
-from .models import Voting, Option, Vote
+from voting_app.forms import ClaimForm, VotingForm
+from .models import Claim, Voting, Option, Vote
 from django.contrib.auth.decorators import login_required
 
 
@@ -17,6 +17,7 @@ def voting_detail(request, voting_id):
     voting = get_object_or_404(Voting, pk=voting_id)
     options = Option.objects.filter(voting_id=voting)
     existing_votes = Vote.objects.filter(user=request.user, option__voting_id=voting)
+    claims = Claim.objects.filter(voting_id=voting)
     if request.method == 'POST':
         selected_options_ids = request.POST.getlist('options')
         selected_options = Option.objects.filter(id__in=selected_options_ids)
@@ -36,7 +37,7 @@ def voting_detail(request, voting_id):
                 vote_percents[option.id] = 0
         return render(request, 'voting.html', {'voting': voting, 'options': options, 'already_voted': 1, 'vote_percents': vote_percents})
     else:
-        return render(request, 'voting.html', {'voting': voting, 'options': options, 'already_voted': 0})
+        return render(request, 'voting.html', {'voting': voting, 'options': options, 'already_voted': 0, 'claims': claims})
 
 
 
@@ -115,3 +116,18 @@ def user_votes(request, user_id):
         'user_votes_data': user_votes_data,
     }
     return render(request, 'user_options_list.html', context)
+
+
+def create_claim(request, voting_id):
+    voting = Voting.objects.get(pk=voting_id)
+
+    if request.method == 'POST':
+        form = ClaimForm(request.user, request.POST, initial={'voting': voting})
+        if form.is_valid():
+            form.user = request.user
+            form.save()
+            return redirect('voting_list')
+    else:
+        form = ClaimForm(request.user, initial={'voting': voting})
+
+    return render(request, 'create_claim.html', {'form': form})
