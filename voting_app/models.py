@@ -17,3 +17,9 @@ class Option(models.Model):
 class Vote(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   option = models.ForeignKey(Option, on_delete=models.CASCADE)
+
+
+class Claim(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    body = models.TextField()
+    voting = models.ForeignKey(Voting, on_delete=models.CASCADE)
