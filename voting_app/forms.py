@@ -1,5 +1,5 @@
 from django import forms
-from .models import Voting, Option
+from .models import Claim, Voting, Option
 
 class VotingForm(forms.ModelForm):
     voting_type = forms.ChoiceField(
@@ -27,3 +27,24 @@ class VotingForm(forms.ModelForm):
             Option.objects.create(voting_id=voting, content=option_text.strip())
 
         return voting
+
+
+class ClaimForm(forms.ModelForm):
+    class Meta:
+        model = Claim
+        fields = ['body', 'voting']
+
+    def __init__(self, user, *args, **kwargs):
+        super(ClaimForm, self).__init__(*args, **kwargs)
+        self.fields['voting'].queryset = Voting.objects.filter(author=user)
+        self.fields['voting'].widget = forms.HiddenInput()  # Скрыть поле voting, так как значение уже установлено
+
+    def clean_voting(self):
+        return self.cleaned_data['voting']
+
+    def save(self, commit=True):
+        claim = super(ClaimForm, self).save(commit=False)
+        claim.user = self.user
+        if commit:
+            claim.save()
+        return claim
