@@ -152,18 +152,27 @@
               {% endif %}
               {% if already_voted == 0 %}
               <form class="card__variants" method="post" action="{% url 'voting_detail' voting.id %}" id="votingForm">
-                {% csrf_token %} 
+                {% csrf_token %}
                 <ul class="card__variants__list">
                   {% for option in options %}
                     <li class="card__variants__item">
                       <div class="card__variants__item__container">
                         <div class="card__variants__button">
+                          {% if voting_type == 'single' %}
+                          <input
+                            type="radio"
+                            name="options"
+                            value="{{ option.id }}"
+                            id="{{ option.id }}"
+                          />
+                          {% elif voting_type == 'multiple' %}
                           <input
                             type="checkbox"
                             name="options"
                             value="{{ option.id }}"
                             id="{{ option.id }}"
                           />
+                          {% endif %}
                         </div>
                         <div class="card__variants__content">
                           <label for="{{ option.id }}">{{ option.content }}</label>
@@ -216,20 +225,6 @@
                   </div>
                 </div>
                 {% endif %}
-                <br>
-              <a href="{% url 'create_claim' voting_id=voting.id %}">Создать жалобу</a>
-              <br>
-                      <div class="container mt-4">
-                        <h1>Жалобы</h1>
-                        <ul class="list-group">
-                            {% for claim in claims %}
-                                <li class="list-group-item">
-                                    {{ claim.body }}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-
             </div>
           </div>
         </div>

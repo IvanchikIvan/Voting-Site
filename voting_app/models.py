@@ -7,6 +7,7 @@ class Voting(models.Model):
   description = models.TextField()
   author = models.ForeignKey(User, on_delete=models.CASCADE)
   image = models.ImageField(upload_to='voting_images/', blank=True, null=True)
+  voting_type = models.CharField(max_length=255, default='SOME STRING')
 
 
 class Option(models.Model):

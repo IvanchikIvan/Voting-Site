@@ -18,6 +18,7 @@ def voting_detail(request, voting_id):
     options = Option.objects.filter(voting_id=voting)
     existing_votes = Vote.objects.filter(user=request.user, option__voting_id=voting)
     claims = Claim.objects.filter(voting_id=voting)
+    voting_type = voting.voting_type
     if request.method == 'POST':
         selected_options_ids = request.POST.getlist('options')
         selected_options = Option.objects.filter(id__in=selected_options_ids)
@@ -37,7 +38,7 @@ def voting_detail(request, voting_id):
                 vote_percents[option.id] = 0
         return render(request, 'voting.html', {'voting': voting, 'options': options, 'already_voted': 1, 'vote_percents': vote_percents})
     else:
-        return render(request, 'voting.html', {'voting': voting, 'options': options, 'already_voted': 0, 'claims': claims})
+        return render(request, 'voting.html', {'voting': voting, 'options': options, 'already_voted': 0, 'voting_type': voting_type, 'claims': claims})
 
 
 
@@ -64,6 +65,7 @@ def user_logout(request):
 def create_voting(request):
     if request.method == 'POST':
         form = VotingForm(request.POST, request.FILES, request=request)
+        voting_type = request.POST['voting_type']
         if form.is_valid():
             form.save()
     else:

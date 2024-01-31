@@ -4,6 +4,8 @@ from voting_app import views
 from voting_site import settings
 from django.conf.urls.static import static
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('voting/', views.voting_detail),
@@ -15,6 +17,7 @@ urlpatterns = [
     path('accounts/register/', views.user_register, name='register'),
     path('edit_voting/<int:voting_id>/', views.edit_voting, name='edit_voting'),
     path('user_options_list/<int:user_id>/', views.user_votes, name='user_options_list'),
+    path('create_claim/<int:voting_id>/', views.create_claim, name='create_claim'),
 ]
 
 if settings.DEBUG:
