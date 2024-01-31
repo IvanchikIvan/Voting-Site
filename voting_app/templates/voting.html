@@ -225,6 +225,17 @@
                   </div>
                 </div>
                 {% endif %}
+                <a href="{% url 'create_claim' voting_id=voting.id %}">Создать жалобу</a>
+                        <div class="container mt-4">
+                          <h1>Жалобы</h1>
+                          <ul class="list-group">
+                              {% for claim in claims %}
+                                  <li class="list-group-item">
+                                      {{ claim.body }}
+                                  </li>
+                              {% endfor %}
+                          </ul>
+                      </div>
             </div>
           </div>
         </div>
