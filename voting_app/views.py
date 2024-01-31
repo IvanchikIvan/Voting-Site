@@ -27,18 +27,21 @@ def voting_detail(request, voting_id):
                 Vote.objects.create(user=request.user, option=option)
         vote_percents = {}
         votes_summ = 0
+        users = []
+        for option in options:
+            for vote in Vote.objects.filter(option_id=option.id):
+                if vote.user not in users:
+                    users.append(vote.user)
         for option in options:
             vote_summ = Vote.objects.filter(option_id=option.id).count()
-            votes_summ += vote_summ
-        for option in options:
-            vote_summ = Vote.objects.filter(option_id=option.id).count()
-            if votes_summ > 0:
-                vote_percents[option.id] = int(vote_summ / max(1, votes_summ) * 100)
+            if len(users) > 0:
+                vote_percents[option.id] = int(vote_summ / max(1, len(users)) * 100)
             else:
                 vote_percents[option.id] = 0
         return render(request, 'voting.html', {'voting': voting, 'options': options, 'already_voted': 1, 'vote_percents': vote_percents})
     else:
         return render(request, 'voting.html', {'voting': voting, 'options': options, 'already_voted': 0, 'voting_type': voting_type, 'claims': claims})
+
 
 
 
