@@ -9,104 +9,37 @@
     <link rel="stylesheet" href="{% static 'css\menu.css' %}" />
     <link rel="stylesheet" href="{% static 'css\header.css' %}" />
     <link rel="stylesheet" href="{% static 'css\scrollbar.css' %}" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   </head>
   <body>
-    <div class="nav">
-      <div class="nav__container">
-        <div class="nav_logo">
-          <div class="nav_logo_container">
-            <a class="nav_logo-link" href="" title="SpaceAlien">
-              <div class="nav_logo-svg_container">
-                <img
-                  class="nav_logo-svg"
-                  src="{% static 'data\SpaceAlien_logo.svg' %}"
-                  alt=""
-                />
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="menu__container">
-          <nav class="menu__link-bar">
-            <ul class="menu__list">
-              <li class="menu__item active" role="listitem">
-                <a class="menu__link" href="">
-                  <div class="menu__link_container">
-                    <div class="menu__icon">
-                      <img src="{% static 'data\home.svg' %}" alt="" />
-                    </div>
-                    <div class="menu__title">Главная</div>
-                  </div>
-                </a>
-              </li>
-              <li class="menu__item no_active" role="listitem">
-                <a class="menu__link" href="">
-                  <div class="menu__link_container">
-                    <div class="menu__icon">
-                      <img src="{% static 'data\notifications.svg' %}" alt="" />
-                    </div>
-                    <div class="menu__title">Уведомления</div>
-                  </div>
-                </a>
-              </li>
-              <li class="menu__item no_active" role="listitem">
-                <a class="menu__link" href="">
-                  <div class="menu__link_container">
-                    <div class="menu__icon">
-                      <img src="{% static 'data\article.svg' %}" alt="" />
-                    </div>
-                    <div class="menu__title">Публикации</div>
-                  </div>
-                </a>
-              </li>
-              <li class="menu__item no_active" role="listitem">
-                <a class="menu__link" href="">
-                  <div class="menu__link_container">
-                    <div class="menu__icon">
-                      <img src="{% static 'data\account.svg' %}" alt="" />
-                    </div>
-                    <div class="menu__title">Аккаунт</div>
-                  </div>
-                </a>
-              </li>
-              <li class="menu__item no_active" role="listitem">
-                <a class="menu__link" href="">
-                  <div class="menu__link_container">
-                    <div class="menu__icon">
-                      <img src="{% static 'data\about.svg' %}" alt="" />
-                    </div>
-                    <div class="menu__title">О нас</div>
-                  </div>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-    </div>
+    {% include "NavBar.html" %}
     <div class="content">
       <header>
-        <div class="header_search">
-          <div class="header_search_container">
-            <div class="header__search__input__container">
-              <input
-                id="input"
-                class="header__search__input"
-                type="search"
-                autocomplete="off"
-                spellcheck="false"
-                role="combobox"
-                aria-controls="matches"
-                placeholder="Введите поисковый запрос"
-                aria-expanded="false"
-                aria-live="polite"
-              />
+        <form action="/search/" method="post" class="form_search">
+          {% csrf_token %}
+          <div class="header_search">
+            <div class="header_search_container">
+              <div class="header__search__input__container">
+                <input
+                  id="input"
+                  class="header__search__input"
+                  type="search"
+                  autocomplete="off"
+                  spellcheck="false"
+                  role="combobox"
+                  aria-controls="matches"
+                  placeholder="Введите поисковый запрос"
+                  aria-expanded="false"
+                  aria-live="polite"
+                  name="search"
+                />
+              </div>
             </div>
-            <div class="header__search__cancellation">
-              <img src="{% static 'data\cancellation.svg' %}" alt="" />
+            <div>
+              <button type="submit">Найти</button>
             </div>
           </div>
-        </div>
+        </form>
         <div class="header__log">
           {% if user.is_authenticated %}
           <div class="header__log__container">
@@ -146,9 +79,6 @@
                   </a>
                 </div>
               </div>
-              <a class="edit_button" href="{% url 'edit_voting' voting.id %}"
-                >edit</a
-              >
             </li>
             {% endfor %}
           </ul>

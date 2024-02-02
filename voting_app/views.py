@@ -139,5 +139,17 @@ def create_claim(request, voting_id):
     return render(request, 'create_claim.html', {'form': form})
 
 
+def search(request):
+    if request.method == 'POST':
+        voting_id = request.POST['search']
+        try:
+            destination_url = reverse('voting_detail', kwargs={'voting_id': voting_id})
+            return redirect(destination_url)
+        except:
+            return redirect('voting_list')
+    else:
+        return redirect('voting_list')
+
+
 def handler404(request, exception):
     return render(request, '404.html', status=404)

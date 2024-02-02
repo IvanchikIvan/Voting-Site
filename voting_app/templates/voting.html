@@ -90,38 +90,21 @@
     </div>
     <div class="content">
       <header>
-        <div class="header_search">
-          <div class="header_search_container">
-            <div class="header__search__input__container">
-              <input
-                id="input"
-                class="header__search__input"
-                type="search"
-                autocomplete="off"
-                spellcheck="false"
-                role="combobox"
-                aria-controls="matches"
-                placeholder="Введите поисковый запрос"
-                aria-expanded="false"
-                aria-live="polite"
-              />
-            </div>
-            <div class="header__search__cancellation">
-              <img src="{% static 'data\cancellation.svg' %}" alt="" />
-            </div>
+        <form action="/search/" method="post" class="form_search">
+          {% csrf_token %}
+          <div class="header_search">
+              <div class="header_search_container">
+                  <div class="header__search__input__container">
+                      <input id="input" class="header__search__input" type="search" autocomplete="off" spellcheck="false"
+                             role="combobox" aria-controls="matches" placeholder="Введите поисковый запрос"
+                             aria-expanded="false" aria-live="polite" name="search">
+                  </div>
+              </div>
+              <div>
+                  <button type="submit">Найти</button>
+              </div>
           </div>
-        </div>
-        <div class="header__log">
-          {% if user.is_authenticated %}
-          <div class="header__log__container">
-            <a class="header__log-text" href="{% url 'logout' %}">Выйти</a>
-          </div>
-          {% else %}
-          <div class="header__log__container">
-            <a class="header__log-text" href="{% url 'login' %}">Войти</a>
-          </div>
-          {% endif %}
-        </div>
+      </form>
       </header>
       <main>
         <div class="card">

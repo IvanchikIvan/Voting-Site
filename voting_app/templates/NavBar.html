@@ -1,22 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Title</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'NavBar\NavBar.css' %}" />
-    <link rel="stylesheet" href="{% static 'reset.css' %}" />
-  </head>
-  <body>
-    <nav class="navbar">
-      <div class="navbar__container">
-        <a class="navbar__item" href="{% url 'voting_list' %}">Главная</a>
-        {% if user.is_authenticated %}
-        <a class="navbar__item" href="{% url 'logout' %}">Выйти</a>
-        {% else %}
-        <a class="navbar__item" href="{% url 'login' %}">Войти</a>
-        {% endif %}
-      </div>
-    </nav>
-  </body>
-</html>
+{% load static %}
+<div class="nav">
+        <div class="nav__container">
+            <div class="nav_logo">
+                <div class="nav_logo_container">
+                    <a class="nav_logo-link" href="" title="SpaceAlien">
+                        <div class="nav_logo-svg_container">
+                            <img class="nav_logo-svg" src="{% static 'data\SpaceAlien_logo.svg' %}" alt="">
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="menu__container">
+                <nav class="menu__link-bar">
+                    <ul class="menu__list">
+                        <li class="menu__item active" role="listitem">
+                            <a class="menu__link" href="/">
+                                <div class="menu__link_container">
+                                    <div class="menu__icon">
+                                        <img src="{% static 'data\home.svg' %}" alt="">
+                                    </div>
+                                    <div class="menu__title">
+                                        Главная
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="menu__item no_active" role="listitem">
+                            <a class="menu__link" href="">
+                                <div class="menu__link_container">
+                                    <div class="menu__icon">
+                                        <img src="{% static 'data\notifications.svg' %}" alt="">
+                                    </div>
+                                    <div class="menu__title">
+                                        Уведомления
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="menu__item no_active" role="listitem">
+                            <a class="menu__link" href="/publications/">
+                                <div class="menu__link_container">
+                                    <div class="menu__icon">
+                                        <img src="{% static 'data\article.svg' %}" alt="">
+                                    </div>
+                                    <div class="menu__title">
+                                        Публикации
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="menu__item no_active" role="listitem">
+                            <a class="menu__link" href="">
+                                <div class="menu__link_container">
+                                    <div class="menu__icon">
+                                        <img src="{% static 'data\account.svg' %}" alt="">
+                                    </div>
+                                    <div class="menu__title">
+                                        Аккаунт
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="menu__item no_active" role="listitem">
+                            <a class="menu__link" href="/about_us/">
+                                <div class="menu__link_container">
+                                    <div class="menu__icon">
+                                        <img src="{% static 'data\about.svg' %}" alt="">
+                                    </div>
+                                    <div class="menu__title">
+                                        О нас
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
