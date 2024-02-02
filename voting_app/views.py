@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.models import User
 from django.urls import reverse
 from voting_app.forms import ClaimForm, VotingForm
 from .models import Claim, Voting, Option, Vote
@@ -149,6 +150,16 @@ def search(request):
             return redirect('voting_list')
     else:
         return redirect('voting_list')
+
+
+def user_page(request, username):
+    user = User.objects.get(username=username)
+    if request.user == user:
+        return render(request, 'profile.html', {'user': user})
+    else:
+        return redirect('voting_list')
+
+
 
 
 def handler404(request, exception):
