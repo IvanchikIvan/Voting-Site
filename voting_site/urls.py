@@ -20,6 +20,7 @@ urlpatterns = [
     path('create_claim/<int:voting_id>/', views.create_claim, name='create_claim'),
     path('search/', views.search, name='search'),
     path('profile/<str:username>', views.user_page, name='profile'),
+    path('publications/', views.publications, name='publications'),
 ]
 
 if settings.DEBUG:

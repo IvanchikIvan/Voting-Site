@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Публикации</title>
+    <link rel="stylesheet" href="{% static 'css\index.css' %}" />
+    <link rel="stylesheet" href="{% static 'css\menu.css' %}" />
+    <link rel="stylesheet" href="{% static 'css\header.css' %}" />
+    <link rel="stylesheet" href="{% static 'css\scrollbar.css' %}" />
+</head>
+<body>
+    {% include "NavBar.html" %}
+    <div class="content">
+        <header>
+            <form action="/search/" method="post" class="form_search">
+                {% csrf_token %}
+                <div class="header_search">
+                    <div class="header_search_container">
+                        <div class="header__search__input__container">
+                            <input id="input" class="header__search__input" type="search" autocomplete="off" spellcheck="false"
+                                   role="combobox" aria-controls="matches" placeholder="Введите поисковый запрос"
+                                   aria-expanded="false" aria-live="polite" name="search">
+                        </div>
+                    </div>
+                    <div>
+                        <button type="submit">Найти</button>
+                    </div>
+                </div>
+            </form>
+            <div class="header__log">
+                {% if user.is_authenticated %}
+                    <div class="header__log__container">
+                        <a class="header__log-text" href="{% url 'logout' %}">Выйти</a>
+                    </div>
+                {% else %}
+                    <div class="header__log__container">
+                        <a class="header__log-text" href="{% url 'login' %}">Войти</a>
+                    </div>
+                {% endif %}
+            </div>
+        </header>
+        <main>
+            <div class="cards">
+                <a href="{% url 'create_voting' %}">Здесь мог быть ваш новый опрос</a>
+                <ul class="card__list">
+                    {% for voting in user_voting %}
+                        <li class="card__item">
+                            <div class="card__container">
+                                <div class="card__profile_image">
+                                    <div class="card__profile_image__conteiner">
+                                        <img src="{% static 'data\test.png' %}" alt="">
+                                    </div>
+                                </div>
+                                <div class="card__information">
+                                    <div class="card__title__container">
+                                        <div class="card__title">{{ voting.author.username }}</div>
+                                        <div class="card__type">Опрос</div>
+                                    </div>
+                                    <div class="card__description">{{ voting.title }}</div>
+                                </div>
+                                <div class="card__more">
+                                    <a href="{% url 'voting_detail' voting.id %}">
+                                        <div class="card__more__container">
+                                            <img src="{% static 'data\more.svg' %}" alt="">
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <a class="edit_button" href="{% url 'edit_voting' voting.id %}">edit</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

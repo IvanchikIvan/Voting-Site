@@ -91,7 +91,7 @@ def user_register(request):
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
 
-
+@login_required
 def edit_voting(request, voting_id):
     voting = get_object_or_404(Voting, pk=voting_id)
     if request.user != voting.author:
@@ -124,7 +124,7 @@ def user_votes(request, user_id):
     }
     return render(request, 'user_options_list.html', context)
 
-
+@login_required
 def create_claim(request, voting_id):
     voting = Voting.objects.get(pk=voting_id)
 
@@ -151,7 +151,7 @@ def search(request):
     else:
         return redirect('voting_list')
 
-
+@login_required
 def user_page(request, username):
     user = User.objects.get(username=username)
     if request.user == user:
@@ -159,6 +159,11 @@ def user_page(request, username):
     else:
         return redirect('voting_list')
 
+
+@login_required
+def publications(request):
+    user_voting = Voting.objects.filter(author=request.user)
+    return render(request, 'publications.html', {'user_voting': user_voting})
 
 
 
