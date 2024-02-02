@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from voting_app.forms import ClaimForm, VotingForm
 from .models import Claim, Voting, Option, Vote
 from django.contrib.auth.decorators import login_required
@@ -136,3 +137,7 @@ def create_claim(request, voting_id):
         form = ClaimForm(request.user, initial={'voting': voting})
 
     return render(request, 'create_claim.html', {'form': form})
+
+
+def handler404(request, exception):
+    return render(request, '404.html', status=404)

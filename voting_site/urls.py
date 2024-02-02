@@ -4,7 +4,7 @@ from voting_app import views
 from voting_site import settings
 from django.conf.urls.static import static
 
-
+handler404 = 'voting_app.views.handler404'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
