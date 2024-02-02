@@ -151,6 +151,15 @@ main {
     font-weight: 400;
     text-align: justify;
 }
+.card__image__container {
+    width: 100%;
+    height: auto;
+    padding: 16px 0;
+}
+.card__image {
+    border-radius: var(--border_radius);
+}
+
 
 .card__variants {
     width: auto;
@@ -195,10 +204,6 @@ main {
 
 .card__variants__content {
     padding-left: 8px;
-    display: flex;
-    font-display: row;
-    align-items: center;
-    justify-content: flex-start;
 }
 
 .card__send__container {
